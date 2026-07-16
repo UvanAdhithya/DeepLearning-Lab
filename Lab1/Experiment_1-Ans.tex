@@ -194,8 +194,7 @@ The complete source code for this experiment, including dataset loading, explora
 \includegraphics[width=0.95\textwidth]{eda_fig.png}
 \end{center}
 
-The histograms show that Variance and Entropy are roughly symmetric while Skewness and Curtosis are noticeably right-skewed, with Curtosis showing the most extreme outliers on the higher end. The correlation heatmap indicates a strong negative correlation between Variance and Class, and a moderate negative correlation between Skewness and Curtosis, while the scatter plot of Variance vs Skewness shows the two classes are largely, though not perfectly, linearly separable. The boxplots further confirm that Skewness and Curtosis have the widest spread and the most outliers among the four features.
-
+As we can see in the histograms, the distributions of Variance and Entropy are fairly symmetric, while the distributions of both Skewness and Curtosis appear to be heavily right-skewed, with Curtosis having the most extreme outliers. From the correlation heatmap, we can easily see there is a strong negative correlation between Variance and Class and we can also see there is a somewhat strong negative correlation between Skewness and Curtosis. From the scatter plot of Variance against Skewness, we can observe that the two classes are almost but not completely linearly separable. The boxplots suggest, once again, that the variability in Skewness and Curtosis is higher than the variability of the other two features.
 \vspace{4mm}
 
 \subsection*{Training Error vs Epoch, Weight Evolution, Bias Evolution and Confusion Matrix}
@@ -204,7 +203,7 @@ The histograms show that Variance and Entropy are roughly symmetric while Skewne
 \includegraphics[width=0.95\textwidth]{task7_fig.png}
 \end{center}
 
-The Training Error vs Epoch plot shows a sharp drop in misclassifications from 47 to 22 within the first two epochs, after which the error oscillates between roughly 15 and 29 without fully converging to zero, indicating the classes are not perfectly linearly separable. The Weight Evolution plot shows that the weights for Variance and Skewness decrease steadily and stabilize around $-0.15$ to $-0.18$, while the Bias Evolution plot shows the bias drifting downward in discrete steps from $-0.03$ to $-0.07$ as training progresses. The Confusion Matrix shows only 2 false positives and 3 false negatives out of 275 test samples, confirming the strong classification performance reported in the evaluation metrics.
+The Training Error vs Epoch graph demonstrates that the number of misclassifications has dropped sharply from 47 to 22 during the first two epochs, before steadily oscillating between 15 and 29, which implies that the classes are not completely linearly separable. The Weight Evolution graph demonstrates that Variance's and Skewness' weights decline and stabilize at roughly $-0.15$ to $-0.18$. The Bias Evolution graph indicates that the bias drifts downward stepwise from $-0.03$ to $-0.07$. The Confusion Matrix confirms only 2 false positives and 3 false negatives for the 275 test samples examined.
 
 \vspace{4mm}
 
@@ -214,7 +213,7 @@ The Training Error vs Epoch plot shows a sharp drop in misclassifications from 4
 \includegraphics[width=0.7\textwidth]{lr_comparison.png}
 \end{center}
 
-The misclassification curves for learning rates 0.001, 0.01 and 0.1 overlap almost exactly, since the sign of each weight update (and hence the prediction at every step) is identical for zero-initialized weights and only the magnitude of the weights scales with $\eta$. This shows that for this dataset the perceptron's convergence behaviour (number of epochs to stabilize, oscillation pattern) is essentially independent of the learning rate, and only the final weight magnitudes differ.
+The misclassification curves for learning rates of 0.001, 0.01, and 0.1 are almost identical as all weight updates (and hence predictions at each and every step) follow the same sign in the case of zero initialized weights and only differ in magnitude with $\eta$. This means that for the given dataset, the convergence behavior of the perceptron (the number of epochs required for stabilization, the trend of oscillation behavior, etc.) remains unaffected from the learning rate but differs in only the final magnitude of weights.
 
 \vspace{4mm}
 
@@ -224,7 +223,7 @@ The misclassification curves for learning rates 0.001, 0.01 and 0.1 overlap almo
 \includegraphics[width=0.7\textwidth]{decision_boundary.png}
 \end{center}
 
-Using only Variance and Skewness, the perceptron learns a linear decision boundary that separates most authentic (blue) banknotes from forged (red) banknotes, correctly capturing the general trend that higher Variance corresponds to authentic notes. A visible band of misclassified points near the boundary confirms that these two features alone are not perfectly linearly separable, which is why the training error in the earlier plot never converges to zero.
+By using only the Variance and Skewness features, the perceptron is able to form a straight line that distinguishes the majority of real (blue) banknotes from counterfeit (red) ones. It has been proven that the higher the Variance, the greater the chance of being a real banknote. The band of misclassified points visible close to the separating line confirms that the two features are not totally linearly separable.
 
 %----------------------------------------------------------
 
@@ -282,7 +281,7 @@ $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$\\
 
 \section*{8. Discussion and Conclusion}
 
-The Single Layer Perceptron trained from scratch on the Banknote Authentication dataset achieved a strong test accuracy of 98.18\%, with precision, recall and F1-score all above 0.97, confirming that the four features (Variance, Skewness, Curtosis and Entropy) make the two classes almost, though not perfectly, linearly separable. The training error did not converge to exactly zero within 20 epochs, oscillating between 15 and 29 misclassifications per epoch after an initial sharp drop, which indicates a small number of samples lie on the wrong side of every possible linear boundary. The learning rate comparison showed that, for this zero-initialized perceptron, the number of misclassifications per epoch is essentially unaffected by $\eta \in \{0.001, 0.01, 0.1\}$, since the learning rate only scales the magnitude of the weight updates and not their sign. When restricted to only two features (Variance and Skewness) for the decision boundary visualization, the model still performed reasonably but with visibly more overlap near the boundary, showing that Curtosis and Entropy do contribute useful separating information. The custom implementation's accuracy (98.18\%) was very close to that of Scikit-learn's built-in Perceptron (98.55\%), validating the correctness of the from-scratch implementation of the weighted sum, step activation, and the perceptron learning rule. Overall, the experiment demonstrates both the strengths of the perceptron as a simple, interpretable linear classifier on well-behaved data, and its fundamental limitation on data that is not perfectly linearly separable.
+A fully trained Single Layer Perceptron using the Banknote Authentication dataset showed impressive performance with the test accuracy of 98.18 % when ratioed with precision, recall and F1 values exceeding 0.97. Since this confirms the linear separability of the two classes represented with four features (Variance, Skewness, Curtosis and Entropy), the training error during 20 epochs did not go down to zero as it ranged from 15 to 29 errors every epoch after the initial drop, which means that only a small number of samples were mistakenly classified. Furthermore, comparing the learning rates demonstrated that the learning rate had no effect on the rates of misclassification during the training for this zero-initiated perceptron because its only function is scaling the magnitude of weight corrections. Eventually, upon utilizing decision boundaries with only two features (Variance and Skewness), the network still performed well but with the noticeable overlap in the area of boundary that confirms the importance of using Curtosis and Entropy in the classification The custom implementation's accuracy (98.18\%) was very close to that of Scikit-learn's built-in Perceptron (98.55\%), validating the correctness of the from-scratch implementation of the weighted sum, step activation, and the perceptron learning rule. Overall, the experiment demonstrates both the strengths of the perceptron as a simple, interpretable linear classifier on well-behaved data, and its fundamental limitation on data that is not perfectly linearly separable.
 
 %----------------------------------------------------------
 
